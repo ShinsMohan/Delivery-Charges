@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sales_order_tree" model="ir.ui.view">
+            <field name="name">sales.order.view.tree</field>
+            <field name="model">sales.order.view</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="order_number" />
+                    <field name="customer_name" />
+                    <field name="date_order" />
+                    <field name="amount_total" sum="Total Amount" />
+                    <field name="product_qty" sum="Product Quantity" />
+                    <field name="product_volume" sum="Product Volume" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sales_order_view" model="ir.actions.act_window">
+            <field name="name">Sales Order View</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.order.view</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+            id="sale_order_view_menu"
+            name="Sale Order SQL View"
+            action="action_sales_order_view"
+            parent="sale.menu_sale_report"
+            sequence="10"/>
+    </data>
+</odoo>

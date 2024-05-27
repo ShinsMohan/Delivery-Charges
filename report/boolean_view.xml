@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_sale_order_selected_products" model="ir.actions.report">
+        <field name="name">Sale Order with Selected Products</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <!-- report_name should be module_name.template_id -->
+        <field name="report_name">delivery_charges.report_sale_order_selected_products</field>
+        <!-- report_file states actual file path of report template  -->
+        <field name="report_file">delivery_charges.report_sale_order_selected_products</field>
+        <!-- what is binding model id? -->
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="report_sale_order_selected_products">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <main> <!-- Add main element here -->
+                        <h2>Sale Order</h2>
+                        <p>Customer: <span t-field="doc.partner_id.name" /></p>
+                        <p>Date: <span t-field="doc.date_order" /></p>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sl_no" t-value="0" />
+                                <t t-foreach="doc.order_line.filtered('print_selected')" t-as="line">
+                                    <t t-set="sl_no" t-value="sl_no + 1" />
+                                    <tr>
+                                        <td>
+                                            <span t-esc="sl_no" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_uom_qty" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.price_unit" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.price_subtotal" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>  
+                    </main> <!-- Close main element -->
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

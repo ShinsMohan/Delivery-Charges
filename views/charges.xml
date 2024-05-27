@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="delivery_comments"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_inherit_delivery_terms" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.delivery.terms</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml"> 
+            <xpath expr="//field[@name='delivery_comments']" position="after">
+                <field name="delivery_terms"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ADD IMPORT BUTTON INSIDE SALE ORDER FORM HEADER -->
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_wizard" string="Import Sale Order Document" type="object"
+                    class="oe_highlight" />
+            </xpath>
+        </field>
+    </record>
+</odoo> 
